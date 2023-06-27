@@ -1,0 +1,26 @@
+import numpy as np 
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+dat = pd.read_csv("Unemployment in India.csv")
+dat =pd.read_csv("Unemployment_Rate_upto_11_2020.csv")
+print(dat.head())
+print(dat.isnull().sum())
+plt.figure(figsize=(10,10))
+sns.heatmap(dat.corr())
+plt.show()
+dat.columns=["States","Date","Frequency","Estimated Unemployment Rate","Estimated Employed","Estimated Labour Participation Rate","Region","longitude","latitude"]
+plt.title("INDIA'S UNEMPLOYMENT")
+sns.histplot(x="Estimated Employed", hue="Region",data=dat)
+plt.show()
+plt.figure(figsize=(10,10))
+plt.title("INDIA'S UNEMPLOYMENT")
+sns.histplot(x="Estimated Unemployment Rate", hue="Region",data=dat)
+plt.show()
+unemployment = dat[["States","Region","Estimated Unemployment Rate"]]
+fig = px.sunburst(unemployment,path=["Region","States"],
+                 values="Estimated Unemployment Rate",
+                 width=800, height=800,
+                 title="Unemployment Rate in India")
+fig.show()
